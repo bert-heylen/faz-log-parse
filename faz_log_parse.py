@@ -1,3 +1,4 @@
+import csv
 import sys
 import argparse
 from argparse import RawTextHelpFormatter
@@ -25,10 +26,9 @@ parser.add_argument("-t", "--top", dest="top", type=int, default=50, help ="OPTI
 
 args = parser.parse_args()
 
-def generate_dict(line):
-    line_clean = line.replace('\n','').split(',')
-    for entry in line_clean:
-      if entry == '""':
+def generate_dict(row):
+    for entry in row:
+      if entry == '':
         continue
       else:
         key = entry.replace('"','').split('=')[0]
@@ -72,9 +72,10 @@ if not args.field:
     print("Parsing for unique sessions.")
     
     with open(args.log) as f:
-        for line in f:
+        csvfile = csv.reader(f, delimiter=',')
+        for row in csvfile:
             dict_temp = {}
-            generate_dict(line)
+            generate_dict(row)
             if not 'dstport' in dict_temp.keys():
               dict_temp['dstport'] = ""
             if not 'app' in dict_temp.keys():
@@ -88,9 +89,10 @@ else:
     print("Parsing for field: {}".format(args.field))
     
     with open(args.log) as f:
-        for line in f:
+        csvfile = csv.reader(f, delimiter=',')
+        for row in csvfile:
           dict_temp = {}
-          generate_dict(line)
+          generate_dict(row)
           count(dict_temp[args.field])
     print_sorted(args.top)
 
