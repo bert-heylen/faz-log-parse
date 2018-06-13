@@ -11,7 +11,7 @@ Common fields: policyid, srcip, dstip, dstport
 
 Optional parameters:<br>
 - -t (top): only prints the top x 
-- -f (filter) & -v (value): can be used to filter the report on specific fields and values.
+- -f (filter) & -v (value): can be used to filter the report on specific fields and values.<br>
         For example, look up all unique sessions for srcip 1.1.1.1 only:<br>
         #python faz_log_parse.py <log_file> -f srcip -v 1.1.1.1<br>
         The value takes IP CIDR notation for srcip/dstip filters so you can look up subnets as well: 1.1.1.0/24.
